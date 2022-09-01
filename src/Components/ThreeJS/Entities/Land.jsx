@@ -6,10 +6,18 @@ const Land = () => {
     if (child.isObject3D) {
       child.castShadow = true;
       child.receiveShadow = true;
+      console.log(child);
+      if (child.isMesh) {
+        child.material.envMapIntensity = 0.2;
+        if (child.name === 'Landscape') {
+          // child.material.wireframe = true;
+        }
+      }
+
       if (child.name === 'Landscape') child.castShadow = false;
     }
   });
-
+  // console.log(land);
   return (
     <>
       <primitive object={land.scene} scale={[0.1, 0.1, 0.1]}></primitive>

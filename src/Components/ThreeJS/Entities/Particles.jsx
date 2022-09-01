@@ -1,8 +1,13 @@
 import * as THREE from 'three';
-import { useMemo, useRef } from 'react';
-import { useLoader, useFrame } from '@react-three/fiber';
+import { useEffect, useMemo, useRef } from 'react';
+import { useLoader, useFrame, useThree } from '@react-three/fiber';
 const Particles = ({ count = 8000 }) => {
   const myPoints = useRef();
+  const fogRef = useRef();
+
+  const { scene } = useThree();
+
+  console.log(scene);
 
   const points = useMemo(() => {
     const p = new Array(count).fill(0).map((v) => (0.5 - Math.random()) * 13.5);
@@ -18,9 +23,13 @@ const Particles = ({ count = 8000 }) => {
     }
   });
 
+  useEffect(() => {
+    console.log(fogRef.current);
+  }, [fogRef.current]);
+
   return (
     <>
-      <fog attach='fog' color='#ffffff' near={5} far={10} />
+      <fog ref={fogRef} attach='fog' color='#ffffff' near={1} far={10} />
       <points ref={myPoints}>
         <bufferGeometry>
           <bufferAttribute attach={'attributes-position'} {...points} />

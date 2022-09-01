@@ -1,6 +1,5 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-// import MyBox from './MyBox';
 import {
   Environment,
   OrbitControls,
@@ -9,6 +8,11 @@ import {
 import Entities from './Entities';
 import Particles from './Entities/Particles';
 const CanvasWrapper = () => {
+  const pointerLockControls = useRef();
+  useEffect(() => {
+    console.log(pointerLockControls);
+  }, [pointerLockControls]);
+
   return (
     <div className='canvasWrapper' style={{ backgroundColor: '#000000' }}>
       <Canvas shadows={true}>
@@ -21,7 +25,6 @@ const CanvasWrapper = () => {
           castShadow={true}
         />
         <OrbitControls />
-        {/* <MyBox /> */}
         <Environment background resolution={256} files={'./env.hdr'} />
 
         <Particles />
