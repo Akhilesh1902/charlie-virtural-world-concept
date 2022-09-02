@@ -22,11 +22,6 @@ const Particles = ({ count = 8000 }) => {
       myPoints.current.position.y = 5;
     }
   });
-
-  useEffect(() => {
-    console.log(fogRef.current);
-  }, [fogRef.current]);
-
   return (
     <>
       <fog ref={fogRef} attach='fog' color='#ffffff' near={1} far={10} />
