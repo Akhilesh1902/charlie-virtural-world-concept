@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useLoader, useFrame, useThree } from '@react-three/fiber';
 const Particles = ({ count = 8000 }) => {
   const myPoints = useRef();
