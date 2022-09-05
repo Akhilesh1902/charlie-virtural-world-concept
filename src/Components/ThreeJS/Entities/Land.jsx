@@ -2,10 +2,13 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { useLoader } from '@react-three/fiber';
 // import { RigidBody } from '@react-three/rapier';
 import { useTrimesh } from '@react-three/cannon';
+import { useRef } from 'react';
 // import { useEffect } from 'react';
 
 const Land = () => {
   const land = useLoader(GLTFLoader, './land.glb');
+  const scale = useRef(0.5);
+
   land.scene.traverse((child) => {
     if (child.isObject3D) {
       child.castShadow = true;
@@ -42,7 +45,7 @@ const Land = () => {
         ref={landPRef}
         object={land.scene}
         // object={tm[0].current}
-        scale={[0.1, 0.1, 0.1]}></primitive>
+        scale={[scale.current, scale.current, scale.current]}></primitive>
       {/* </RigidBody> */}
     </>
   );

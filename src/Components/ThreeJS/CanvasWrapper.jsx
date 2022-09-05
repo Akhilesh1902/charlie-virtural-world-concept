@@ -20,7 +20,7 @@ const CanvasWrapper = () => {
   return (
     <div className='canvasWrapper' style={{ backgroundColor: '#000000' }}>
       <Canvas shadows={true}>
-        <PerspectiveCamera makeDefault position={[1, 5, 10]} />
+        <PerspectiveCamera makeDefault position={[1, 0, 10]} />
         <ambientLight color={'#ffffff'} intensity={0.3} />
         <directionalLight
           color={'#ffffff'}

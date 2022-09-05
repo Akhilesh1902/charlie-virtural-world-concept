@@ -44,6 +44,8 @@ class InputController {
   }
 
   onMouseMove_(e) {
+    // console.log(e.clientX, window.innerWidth);
+    // if (e.clientX > window.innerWidth - 20) e.clientX = 0;
     this.current_.mouseX = e.pageX - window.innerWidth / 2;
     this.current_.mouseY = e.pageY - window.innerHeight / 2;
 
@@ -124,12 +126,12 @@ export default class FirstPersonCamera {
     this.camera_ = camera;
     this.input_ = new InputController();
     this.rotation_ = new THREE.Quaternion();
-    this.translation_ = new THREE.Vector3(0, 2, 0);
+    this.translation_ = new THREE.Vector3(0, 5, 0);
     this.phi_ = 0;
     this.phiSpeed_ = 8;
     this.theta_ = 0;
     this.thetaSpeed_ = 5;
-    this.headBobActive_ = false;
+    this.headBobActive_ = true;
     this.headBobTimer_ = 0;
     this.objects_ = objects;
   }
@@ -145,8 +147,10 @@ export default class FirstPersonCamera {
   updateCamera_(_) {
     this.camera_.quaternion.copy(this.rotation_);
     this.camera_.position.copy(this.translation_);
-    this.camera_.position.y += Math.sin(this.headBobTimer_ * 10) * 1.5;
-
+    // this.camera_.position.y += Math.sin(this.headBobTimer_ * 10) * 1.5 * 100;
+    this.camera_.position.y += Math.sin(this.headBobTimer_ * 0.6) * 0.2;
+    // console.log(Math.sin(this.headBobTimer_) * 20);
+    // console.log(this.camera_.position.y);
     const forward = new THREE.Vector3(0, 0, -1);
     forward.applyQuaternion(this.rotation_);
 
@@ -171,7 +175,9 @@ export default class FirstPersonCamera {
 
   updateHeadBob_(timeElapsedS) {
     if (this.headBobActive_) {
+      //   console.log('headbog');
       const wavelength = Math.PI;
+      //   console.log(wavelength);
       const nextStep =
         1 + Math.floor(((this.headBobTimer_ + 0.000001) * 10) / wavelength);
       const nextStepTime = (nextStep * wavelength) / 10;
@@ -179,6 +185,7 @@ export default class FirstPersonCamera {
         this.headBobTimer_ + timeElapsedS,
         nextStepTime
       );
+      //   console.log(nextStep);
 
       if (this.headBobTimer_ === nextStepTime) {
         this.headBobActive_ = false;
@@ -187,7 +194,7 @@ export default class FirstPersonCamera {
   }
 
   updateTranslation_(timeElapsedS) {
-    const velocityReducer = 0.1;
+    const velocityReducer = 0.2;
 
     const forwardVelocity =
       (this.input_.key(KEYS.w) ? 1 : 0) + (this.input_.key(KEYS.s) ? -1 : 0);

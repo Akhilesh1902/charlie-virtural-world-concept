@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { useMemo, useRef } from 'react';
 import { useLoader, useFrame } from '@react-three/fiber';
-const Particles = ({ count = 8000 }) => {
+const Particles = ({ count = 16000 }) => {
   const myPoints = useRef();
   const fogRef = useRef();
+  const pointBoxScale = useRef(5);
 
   const points = useMemo(() => {
     const p = new Array(count).fill(0).map((v) => (0.5 - Math.random()) * 13.5);
@@ -19,13 +20,19 @@ const Particles = ({ count = 8000 }) => {
   });
   return (
     <>
-      <fog ref={fogRef} attach='fog' color='#ffffff' near={1} far={10} />
-      <points ref={myPoints}>
+      <fog ref={fogRef} attach='fog' color='#ffffff' near={5} far={30} />
+      <points
+        ref={myPoints}
+        scale={[
+          pointBoxScale.current,
+          pointBoxScale.current,
+          pointBoxScale.current,
+        ]}>
         <bufferGeometry>
           <bufferAttribute attach={'attributes-position'} {...points} />
         </bufferGeometry>
         <pointsMaterial
-          size={0.06}
+          size={0.3}
           threshold={0.1}
           // color={'#ffffff'}
           sizeAttenuation={true}
