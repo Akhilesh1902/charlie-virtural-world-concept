@@ -2,11 +2,15 @@ import React, { Suspense, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import {
   Environment,
-  OrbitControls,
+  // OrbitControls,
   PerspectiveCamera,
+  // FirstPersonControls,
 } from '@react-three/drei';
 import Entities from './Entities';
 import Particles from './Entities/Particles';
+// import { Physics } from '@react-three/rapier';
+import { Physics } from '@react-three/cannon';
+
 const CanvasWrapper = () => {
   const pointerLockControls = useRef();
   useEffect(() => {
@@ -24,12 +28,14 @@ const CanvasWrapper = () => {
           position={[1, 1, 2]}
           castShadow={true}
         />
-        <OrbitControls />
+        {/* <OrbitControls /> */}
         <Environment background resolution={256} files={'./env.hdr'} />
-
+        {/* <FirstPersonControls movementSpeed={2} /> */}
         <Particles />
         <Suspense>
-          <Entities />
+          <Physics>
+            <Entities />
+          </Physics>
         </Suspense>
       </Canvas>
     </div>
